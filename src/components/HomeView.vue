@@ -49,7 +49,6 @@ export default {
       News: [
          {
           digest: '许老板要爆了',
-          img: 'https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg',
           newsId: 111,
           postTime: "2023-10-11 10:10:00",
           source: "网易财经",
@@ -57,7 +56,6 @@ export default {
         },
         {
           digest: '许老板要爆了',
-          img: 'https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg',
           newsId: 111,
           postTime: "2023-10-11 10:10:00",
           source: "网易财经",
@@ -65,7 +63,6 @@ export default {
         },
         {
           digest: '许老板要爆了',
-          img: 'https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg',
           newsId: 111,
           postTime: "2023-10-11 10:10:00",
           source: "网易财经",
@@ -73,7 +70,6 @@ export default {
         },
         {
           digest: '许老板要爆了',
-          img: 'https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg',
           newsId: 111,
           postTime: "2023-10-11 10:10:00",
           source: "网易财经",
@@ -98,12 +94,12 @@ export default {
     }
   },
   mounted(){
-    this.init();
+    //this.init();
   },
   methods: {
     init(){
-      //this.getRates();
-      //this.getNews();
+      this.getRates();
+      this.getNews();
     },
     async getRates(){
       console.log("get Exchange Rate")
@@ -134,28 +130,7 @@ export default {
       }
       this.News = response.data.data;
       console.log(response)
-      console.log(this.moneyNews)
-      return;
-    },
-    async countLoan() {
-      console.log(4)
-      let response;
-      const apiKey ='c3342988fcb734259300990be6e6e0e8';
-      const params = {
-        key: apiKey,
-        money: 70, // 以万为单位，贷款金额
-        year: '30', // 贷款年限
-        active: '3.25', // 贷款利率，默认3.25
-      };
-      try {
-        response = await axios.get('/fapig/loanCalc/loan', { params });
-      } catch (error) {
-        // 处理错误
-        console.error('Error fetching data:', error);
-        throw error;
-      }
-      console.log(response)
-      console.log(response.data.result)
+      console.log(this.News)
       return;
     },
     async checkStock(){
@@ -207,7 +182,7 @@ export default {
               </el-container>
               <el-carousel indicator-position="outside" style="width: 35vw;margin-top: 1vh;">
                 <el-carousel-item v-for="item in News" :key="item">
-                  <img :src="item.img" style="height:100%;width:100%;opacity: 0.4;z-index: 0;position: absolute;" alt="图片丢失了"/>
+                  <img src='https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg' style="height:100%;width:100%;opacity: 0.4;z-index: 0;position: absolute;" alt="图片丢失了"/>
                   <el-container style="height:100%;width:100%;z-index: 1;position: absolute;display: flex;flex-direction: column;justify-content: center;align-items: center;">
                     <el-container class="news-title">
                       {{ item.title }}

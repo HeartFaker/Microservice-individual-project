@@ -19,9 +19,14 @@ export default {
         }
     },
     mounted() {
-        //this.getUSDRates();
+        //this.init();
     },
     methods: {
+        init(){
+            this.getCodeList();
+            this.getUSDRates();
+            return;
+        },
         async getUSDRates() {
             console.log("get Exchange Rate")
             let response;
@@ -124,11 +129,11 @@ export default {
                                 </el-container>
                                 <el-container>
                                     <el-container>目标金额</el-container>
-                                    <el-container>{{ this.res_money }}</el-container>
+                                    <el-input v-model="res_money" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;" clearable disabled/>
                                 </el-container>
                                 <el-container>
                                     <el-container>汇率</el-container>
-                                    <el-container>{{ this.rate }}</el-container>
+                                    <el-input v-model="rate" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;" clearable disabled/>
                                 </el-container>
                             </el-container>
                         </el-container>
