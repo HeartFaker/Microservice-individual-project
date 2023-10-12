@@ -30,9 +30,9 @@ export default {
 <style scoped>
 .header{
     top: 5vh;
-    left: 10vw;
+    left: 15vw;
     height: 10vh;
-    width: 80vw;
+    width: 70vw;
     background-color: #e3e3e3;
     border-radius: 15px;
     position: fixed;

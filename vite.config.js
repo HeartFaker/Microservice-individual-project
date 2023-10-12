@@ -20,6 +20,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '^/onebox': {
+        target:'http://op.juhe.cn/',
+        changeOrigin: true,
+        secure: false,
+      },
     }
   }
 })

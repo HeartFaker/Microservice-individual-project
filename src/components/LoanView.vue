@@ -100,16 +100,16 @@ export default {
     height: 100vh;
     position: fixed;
 }
-
-.el-main {
-    position: fixed;
-    background-color: #e3e3e3;
-    margin-top: 10vh;
-    width: 68vw;
-    height: 80vh;
-    left: 22vw;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
+.el-main{
+  position: fixed;
+  background-color:#e3e3e3;
+  margin-top: 10vh;
+  width: 58vw;
+  height: 80vh;
+  left: 27vw;
+  border-radius: 15px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
 }
 </style>

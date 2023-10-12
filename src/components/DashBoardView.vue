@@ -39,7 +39,7 @@ export default {
 <style scoped>
 .dashboard{
     margin-top: 10vh;
-    left: 10vw;
+    left: 15vw;
     width: 10vw;
     height: 80vh;
     background-color: #e3e3e3;
