@@ -82,11 +82,9 @@ export default {
                 console.error('Error fetching data:', error);
                 throw error;
             }
-            console.log(response.data.result)
+            console.log(response)
             this.rate= response.data.result[0].exchange;
             this.res_money = this.init_money*this.rate;
-            console.log(this.rate)
-            console.log(this.res_money)
             return;
         }
     },

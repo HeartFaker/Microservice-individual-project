@@ -12,63 +12,28 @@ export default {
   },
   data(){
     return{
+      gainers: "ST天山", //领涨
+      laggards: "晓明股份", //领跌
+
+      total_all_value: 6119.4, //行业总市值（亿元）
+      circulation_value: 4866.54, //行业流通市值（亿元）
+
+      total_tradeAmount: 3806500000, //行业成交额（元）
+      total_tradeNum: 465446500,  //行业成交量(股)
+      diff_rate: -0.0086,  //行业涨跌幅
+
+      ut: "1111-11-11 11-11", //更新时间
+
+      kinds:[],
+
       conversion_rates:[
         {
-          name:"ASD",
-          rate: 3.123,
-        },
-        {
-          name: "ASD",
-          rate: 3.123,
-        },
-        {
-          name: "ASD",
-          rate: 3.123,
-        },
-        {
-          name: "ASD",
-          rate: 3.123,
-        },
-        {
-          name: "ASD",
-          rate: 3.123,
-        },
-         {
-          name: "ASD",
-          rate: 3.123,
-        },
-         {
-          name: "ASD",
-          rate: 3.123,
-        },
-         {
-          name: "ASD",
-          rate: 3.123,
+          name:"Default",
+          rate: 0,
         },
       ],
       News: [
          {
-          digest: '许老板要爆了',
-          newsId: 111,
-          postTime: "2023-10-11 10:10:00",
-          source: "网易财经",
-          title: "高开低走",
-        },
-        {
-          digest: '许老板要爆了',
-          newsId: 111,
-          postTime: "2023-10-11 10:10:00",
-          source: "网易财经",
-          title: "高开低走",
-        },
-        {
-          digest: '许老板要爆了',
-          newsId: 111,
-          postTime: "2023-10-11 10:10:00",
-          source: "网易财经",
-          title: "高开低走",
-        },
-        {
           digest: '许老板要爆了',
           newsId: 111,
           postTime: "2023-10-11 10:10:00",
@@ -95,11 +60,15 @@ export default {
   },
   mounted(){
     //this.init();
+    // 初始化 ECharts 实例
+    this.myChart = echarts.init(document.getElementById('barChart'));
+    this.renderChart();
   },
   methods: {
     init(){
       this.getRates();
       this.getNews();
+      this.checkStock_A();
     },
     async getRates(){
       console.log("get Exchange Rate")
@@ -133,27 +102,73 @@ export default {
       console.log(this.News)
       return;
     },
-    async checkStock(){
-      console.log(5)
+    async checkStock_A() {
+      console.log("check A stock")
       let response;
       const showapi_appid = 1493332;
       const showapi_apisign = "8f988c77d1c543509a82a62508945ef4";
-      const date1 = "20231012";
-      const code1 = "000651";
+      const genusCode = "A";
       const params = {
-        date:date1,
-        code:code1,
+        genusCode: genusCode
       };
       try {
-        response = await axios.get('https://route.showapi.com/131-66?showapi_appid=1493332&showapi_sign=8f988c77d1c543509a82a62508945ef4', { params });
+        response = await axios.get('https://route.showapi.com/131-72?showapi_appid=1493332&showapi_sign=8f988c77d1c543509a82a62508945ef4', { params });
       } catch (error) {
         // 处理错误
         console.error('Error fetching data:', error);
         throw error;
       }
-      console.log(response)
-      console.log(response.api_res_body.list)
+      console.log(response.data.api_res_body)
+      this.gainers= response.data.api_res_body.gainers[0];
+      this.laggards= response.data.api_res_body.laggards[0];
+
+      this.total_all_value= response.data.api_res_body.total_all_value;
+      this.circulation_value= response.data.api_res_body.circulation_value;
+
+      this.total_tradeAmount= response.data.api_res_body.total_tradeAmount;
+      this.total_tradeNum= response.data.api_res_body.total_tradeNum;
+      this.diff_rate= response.data.api_res_body.diff_rate;
+      this.ut= response.data.api_res_body.ut;
+
+      this.kinds= response.data.api_res_body.kinds;
       return;
+    },
+    renderChart() {
+      // 柱状图数据
+      const option = {
+        title: {
+          // text: 'A股'
+        },
+        tooltip: {},
+        legend: {
+          data: ['总市值', '流通市值']
+        },
+        grid: {
+          left: '3%', // 调整左边距
+          right: '4%', // 调整右边距
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          data: ['行业市值']
+        },
+        yAxis: {},
+        series: [
+          {
+            name: '总市值',
+            type: 'bar',
+            data: [this.total_all_value]  // 行业总市值数据
+          },
+          {
+            name: '流通市值',
+            type: 'bar',
+            data: [this.circulation_value]  // 行业流通市值数据
+          }
+        ]
+      };
+
+      // 使用配置项渲染图表
+      this.myChart.setOption(option);
     }
   },
 }
@@ -171,9 +186,29 @@ export default {
         </el-aside>
         <el-main>
           <el-container style="display: flex;flex-direction: column;">
-            <el-container class="left-box">
-              <el-container class="left-title">
+            <el-container class="left-box" style="padding-top: 1vh;padding-bottom: 1vh;">
+              <!-- <el-container class="left-title">
                   今日A股
+              </el-container> -->
+              <el-container style="display: flex;flex-direction: row;margin-top: 1vh;">
+                <el-container style="width: 30%;margin-left: 1vw;">
+                    <el-descriptions
+                        direction="vertical"
+                        :column="2"
+                        :size="small"
+                        style="margin-top: 1vh;"
+                        border
+                    >
+                    <el-descriptions-item label="今日A股行情" :span="2">行业涨跌幅{{ diff_rate }}</el-descriptions-item>
+                    <el-descriptions-item label="领涨">{{ gainers }}</el-descriptions-item>
+                    <el-descriptions-item label="领跌">{{ laggards }}</el-descriptions-item>
+                    <el-descriptions-item label="行业成交额（元）">{{ total_tradeAmount }}</el-descriptions-item>
+                    <el-descriptions-item label="行业成交量（股）">{{ total_tradeNum }}</el-descriptions-item>
+                    </el-descriptions>
+                </el-container>
+                <el-container style="margin-left: 2vw;width: 60%;">
+                  <el-container id="barChart" style="width: 20vw;height: 40vh;"></el-container>
+                </el-container>
               </el-container>
             </el-container>
             <el-container class="left-box" style=" top:25vh;">
