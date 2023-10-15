@@ -24,9 +24,9 @@ export default {
             追逐梦想也很帅啊
         </el-container>
         <el-container>
-            <el-menu :default-active="defaultActive" mode="vertical" @select="handleMenuSelect" background-color="#e3e3e3" style="width: 10vw;">
+            <el-menu :default-active="$router" mode="vertical" @select="handleMenuSelect" background-color="#e3e3e3" style="width: 10vw;">
                 <el-menu-item index="" style="font-size: 1vw;"><el-icon><House /></el-icon>首页</el-menu-item>
-                <el-menu-item index="history" style="font-size: 1vw;"><el-icon><Calendar /></el-icon>股票历史</el-menu-item>
+                <el-menu-item index="history" style="font-size: 1vw;"><el-icon><Calendar /></el-icon>股市详情</el-menu-item>
                 <el-menu-item index="news" style="font-size: 1vw;"><el-icon><Trophy /></el-icon>财经新闻</el-menu-item>
                 <el-menu-item index="exchangerate" style="font-size: 1vw;"><el-icon><Notebook /></el-icon>汇率计算</el-menu-item>
                 <el-menu-item index="loan" style="font-size: 1vw;"><el-icon><Watch /></el-icon>公积金贷款</el-menu-item>

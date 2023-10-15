@@ -25,6 +25,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '^/finance': {
+        target:'http://web.juhe.cn/',
+        changeOrigin: true,
+        secure: false,
+      },
     }
   }
 })

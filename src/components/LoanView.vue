@@ -133,7 +133,7 @@ export default {
                             </el-container>
                         </el-container>
 
-                        <el-icon @click="countLoan" size="3rem" style="margin-top: 25vh;cursor: pointer;"><DArrowRight /></el-icon>
+                        <el-icon @click="countLoan" size="3rem" class="change-icon"><DArrowRight /></el-icon>
 
                         <el-container class="right-box">
 
@@ -229,5 +229,9 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 3vh;
+}
+.change-icon{
+    margin-top: 25vh;
+    cursor: pointer;
 }
 </style>

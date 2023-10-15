@@ -9,48 +9,29 @@ export default {
     },
     data() {
         return {
-           News: [
+            News: [
                 {
-                    digest: '许老板要爆了',
-                    newsId: 111,
-                    postTime: "2023-10-11 10:10:00",
-                    source: "网易财经",
-                    title: "高开低走1",
+                    title:"111",
+                    digest:"111",
+                    source:"111",
+                    postTime:"111"
                 },
                 {
-                    digest: '许老板要爆了',
-                    newsId: 211,
-                    postTime: "2023-10-11 10:10:00",
-                    source: "网易财经",
-                    title: "高开低走2",
-                },
-                {
-                    digest: '许老板要爆了',
-                    newsId: 311,
-                    postTime: "2023-10-11 10:10:00",
-                    source: "网易财经",
-                    title: "高开低走3",
-                },
-                {
-                    digest: '许老板要爆了',
-                    newsId: 411,
-                    postTime: "2023-10-11 10:10:00",
-                    source: "网易财经",
-                    title: "高开低走4",
+                    title: "111",
+                    digest: "111",
+                    source: "111",
+                    postTime: "111"
                 },
             ],
             shownNews:1,
         }
     },
-    mounted() {
-       //this.init();
+    created() {
+       this.getNews();
     },
     methods: {
-        init(){
-           this.getNews();
-        },
         async getNews() {
-            console.log(3)
+            console.log("get News")
             let response;
             try {
                 response = await axios.get(' https://www.mxnzp.com/api/news/list/v2?typeId=535&page=1&app_id=mlojkfg0ehviksdo&app_secret=a3ogUW14FLmsmtWfdSRZ5A0hMKBiM5ze');
@@ -59,7 +40,7 @@ export default {
                 console.error('Error fetching data:', error);
                 throw error;
             }
-            this.News = response.data.data;
+            this.News=response.data.data;
             console.log(response)
             console.log(this.News)
             return;
@@ -120,70 +101,67 @@ export default {
                     <el-container style="display: flex;flex-direction: row;height: 43vh;margin-top: 2vh;">
                         <el-container v-if="this.shownNews!=0" class="main-news" style="width: 60%;">
                             <el-container class="news-title">
-                            {{ News[this.shownNews-1].title }}
+                            {{ this.News[this.shownNews-1].title }}
                             </el-container>
                             <el-container>
-                            {{ News[this.shownNews-1].digest }}
+                            {{ this.News[this.shownNews-1].digest }}
                             </el-container>
                             <el-container>
-                            <el-icon size="1rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ News[this.shownNews - 1].source }} 
+                            <el-icon size="1rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ this.News[this.shownNews - 1].source }} 
                             发布于 
-                            <el-icon size="1rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ News[this.shownNews - 1].postTime }}
+                            <el-icon size="1rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ this.News[this.shownNews - 1].postTime }}
                             </el-container>
                         </el-container>
                         <el-container v-else class="main-news" style="width: 60%;">
                             <el-container class="news-title">
-                            {{ News[this.getLength()-1].title }}
+                            {{ this.News[this.getLength()-1].title }}
                             </el-container>
                             <el-container>
-                            {{ News[this.getLength() - 1].digest }}
+                            {{ this.News[this.getLength() - 1].digest }}
                             </el-container>
                             <el-container>
-                            <el-icon size="1rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ News[this.getLength() - 1].source }} 
+                            <el-icon size="1rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ this.News[this.getLength() - 1].source }} 
                             发布于 
-                            <el-icon size="1rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ News[this.getLength() - 1].postTime }}
+                            <el-icon size="1rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ this.News[this.getLength() - 1].postTime }}
                             </el-container>
                         </el-container>
 
                         <el-container style="display: flex;flex-direction: column;margin-left: 1vw;width: 40%;">
                             <el-container class="sub-news">
                                 <el-container class="news-title">
-                                    {{ News[this.shownNews].title }}
+                                    {{ this.News[this.shownNews].title }}
                                 </el-container>
                                 <el-container>
-                                    <!-- {{ News[this.shownNews].digest }} -->
                                 </el-container>
                                 <el-container style="font-size: 0.9rem;">
-                                    <el-icon size="0.9rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ News[this.shownNews].source }} 
+                                    <el-icon size="0.9rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ this.News[this.shownNews].source }} 
                                     发布于 
-                                    <el-icon size="0.9rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ News[this.shownNews].postTime }}
+                                    <el-icon size="0.9rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ this.News[this.shownNews].postTime }}
                                 </el-container>
                             </el-container>
                             <el-container style="height: 4%;"/>
                             <el-container v-if="this.shownNews==this.getLength()-1" class="sub-news">
                                 <el-container class="news-title">
-                                    {{ News[1].title }}
+                                    {{ this.News[1].title }}
                                 </el-container>
                                 <el-container>
-                                    <!-- {{ News[1].digest }} -->
                                 </el-container>
                                 <el-container style="font-size: 0.9rem;">
-                                    <el-icon size="0.9rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ News[1].source }} 
+                                    <el-icon size="0.9rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ this.News[1].source }} 
                                     发布于 
-                                    <el-icon size="0.9rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ News[1].postTime }}
+                                    <el-icon size="0.9rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ this.News[1].postTime }}
                                 </el-container>
                             </el-container>
                             <el-container v-else class="sub-news">
                                 <el-container class="news-title">
-                                    {{ News[this.shownNews + 1].title }}
+                                    {{ this.News[this.shownNews + 1].title }}
                                 </el-container>
                                 <el-container>
-                                    <!-- {{ News[this.shownNews + 1].digest }} -->
                                 </el-container>
                                 <el-container style="font-size: 0.9rem;">
-                                    <el-icon size="0.9rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ News[this.shownNews + 1].source }} 
+                                    <el-icon size="0.9rem" style="margin-top: 0.5vh;margin-right: 0.5vw;"><ChatLineSquare /></el-icon>{{ this.News[this.shownNews + 1].source }} 
                                     发布于 
-                                    <el-icon size="0.9rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ News[this.shownNews + 1].postTime }}
+                                    <el-icon size="0.9rem" style="margin-top: 0.4vh;margin-left: 0.5vw;"><Clock /></el-icon>{{ this.News[this.shownNews + 1].postTime }}
                                 </el-container>
                             </el-container>
                         </el-container>
@@ -233,6 +211,11 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+.main-news:hover{
+    transform: scale(1.05); /* 放大效果 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影 */
 }
 .sub-news{
     background-image: url('https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg'); 
@@ -245,5 +228,9 @@ export default {
     justify-content: center;
     align-items: center;
     height: 48%;
+}
+.sub-news:hover{
+    transform: scale(1.05); /* 放大效果 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影 */
 }
 </style>

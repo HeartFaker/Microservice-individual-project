@@ -12,63 +12,36 @@ export default {
   },
   data(){
     return{
-      gainers: "ST天山", //领涨
-      laggards: "晓明股份", //领跌
+      gainers: "", //领涨
+      laggards: "", //领跌
 
-      total_all_value: 6119.4, //行业总市值（亿元）
-      circulation_value: 4866.54, //行业流通市值（亿元）
+      total_all_value: 0, //行业总市值（亿元）
+      circulation_value: 0, //行业流通市值（亿元）
 
-      total_tradeAmount: 3806500000, //行业成交额（元）
-      total_tradeNum: 465446500,  //行业成交量(股)
-      diff_rate: -0.0086,  //行业涨跌幅
+      total_tradeAmount:0, //行业成交额（元）
+      total_tradeNum: 0,  //行业成交量(股)
+      diff_rate: 0,  //行业涨跌幅
 
-      ut: "1111-11-11 11-11", //更新时间
+      ut: "", //更新时间
 
       kinds:[],
 
-      conversion_rates:[
-        {
-          name:"Default",
-          rate: 0,
-        },
-      ],
-      News: [
-         {
-          digest: '许老板要爆了',
-          newsId: 111,
-          postTime: "2023-10-11 10:10:00",
-          source: "网易财经",
-          title: "高开低走",
-        },
-      ],
-      loan:{
-        bj:{              //贷款本金还款
-          bxTotal:1,      //本息合计
-          capital:1019,   //每月本金
-          lxFirstMonth:1, //第一个月利息
-          lxLastMonth:1.1,//最后一个月利息
-          lxTotal:111,    //总支付利息
-        },
-        bx:{              //贷款本息还款
-          bxPerMonth:222, //每月还款
-          bxTotal:234,    //本息合计
-          lxPerMonth:2345,//每月利息
-          lxTotal:4567,   //总支付利息
-        }
-      },
+      conversion_rates:[],
+      News: [],
+      loan:{},
     }
   },
   mounted(){
     //this.init();
-    // 初始化 ECharts 实例
-    this.myChart = echarts.init(document.getElementById('barChart'));
-    this.renderChart();
   },
   methods: {
-    init(){
+    async init(){
       this.getRates();
       this.getNews();
-      this.checkStock_A();
+      await this.checkStock_A();
+      if(this.total_all_value!=0&&this.circulation_value!=0){
+        this.renderChart();
+      }
     },
     async getRates(){
       console.log("get Exchange Rate")
@@ -98,8 +71,6 @@ export default {
         throw error;
       }
       this.News = response.data.data;
-      console.log(response)
-      console.log(this.News)
       return;
     },
     async checkStock_A() {
@@ -118,19 +89,19 @@ export default {
         console.error('Error fetching data:', error);
         throw error;
       }
-      console.log(response.data.api_res_body)
-      this.gainers= response.data.api_res_body.gainers[0];
-      this.laggards= response.data.api_res_body.laggards[0];
+      console.log(response.data.showapi_res_body)
+      this.gainers= response.data.showapi_res_body.gainers[0];
+      this.laggards= response.data.showapi_res_body.laggards[0];
 
-      this.total_all_value= response.data.api_res_body.total_all_value;
-      this.circulation_value= response.data.api_res_body.circulation_value;
+      this.total_all_value= response.data.showapi_res_body.total_all_value;
+      this.circulation_value= response.data.showapi_res_body.circulation_value;
 
-      this.total_tradeAmount= response.data.api_res_body.total_tradeAmount;
-      this.total_tradeNum= response.data.api_res_body.total_tradeNum;
-      this.diff_rate= response.data.api_res_body.diff_rate;
-      this.ut= response.data.api_res_body.ut;
+      this.total_tradeAmount= response.data.showapi_res_body.total_tradeAmount;
+      this.total_tradeNum= response.data.showapi_res_body.total_tradeNum;
+      this.diff_rate= response.data.showapi_res_body.diff_rate;
+      this.ut= response.data.showapi_res_body.ut;
 
-      this.kinds= response.data.api_res_body.kinds;
+      this.kinds= response.data.showapi_res_body.kinds;
       return;
     },
     renderChart() {
@@ -166,7 +137,7 @@ export default {
           }
         ]
       };
-
+      this.myChart = echarts.init(document.getElementById('barChart'));
       // 使用配置项渲染图表
       this.myChart.setOption(option);
     }
@@ -199,7 +170,7 @@ export default {
                         style="margin-top: 1vh;"
                         border
                     >
-                    <el-descriptions-item label="今日A股行情" :span="2">行业涨跌幅{{ diff_rate }}</el-descriptions-item>
+                    <el-descriptions-item label="今日A股行情" :span="2">行业涨跌幅 {{ diff_rate }}</el-descriptions-item>
                     <el-descriptions-item label="领涨">{{ gainers }}</el-descriptions-item>
                     <el-descriptions-item label="领跌">{{ laggards }}</el-descriptions-item>
                     <el-descriptions-item label="行业成交额（元）">{{ total_tradeAmount }}</el-descriptions-item>
