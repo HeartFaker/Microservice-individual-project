@@ -27,7 +27,7 @@ export default {
         }
     },
     created() {
-       this.getNews();
+       //this.getNews();
     },
     methods: {
         async getNews() {

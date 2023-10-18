@@ -14,11 +14,17 @@ export default defineConfig({
     }
   },
   server: {
+    host: "0.0.0.0",
+    port:81,
     proxy: {
-      '^/fapig': {
+      '/fapig': {
         target:'http://apis.juhe.cn/',
         changeOrigin: true,
         secure: false,
+        pathRewrite: {
+            "^/fapig": "/", // 设置/api路径重定向为根目录"/";
+        },
+
       },
       '^/onebox': {
         target:'http://op.juhe.cn/',
