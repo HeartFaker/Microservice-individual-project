@@ -10,19 +10,19 @@ export default {
     data() {
         return {
             conversion_rates: [],
-            code_list:[],
-            init_money:'',
-            init_code:'',
-            to_code:'',
-            res_money:0,
-            rate:0,
+            code_list: [],
+            init_money: '',
+            init_code: '',
+            to_code: '',
+            res_money: 0,
+            rate: 0,
         }
     },
     mounted() {
-        //this.init();
+        this.init();
     },
     methods: {
-        init(){
+        init() {
             this.getCodeList();
             this.getUSDRates();
             return;
@@ -44,14 +44,14 @@ export default {
             this.conversion_rates = convertedData;
             return;
         },
-        async getCodeList(){
+        async getCodeList() {
             console.log("get code list")
             let response;
             const apiKey = '2f0586778bb1bfdd0181901743948218';
             const version = '2'
             const params = {
                 key: apiKey,
-                version:version,
+                version: version,
             };
             try {
                 response = await axios.get('/onebox/exchange/list', { params });
@@ -61,10 +61,10 @@ export default {
                 throw error;
             }
             console.log(response.data.result.list)
-            this.code_list= response.data.result.list;
+            this.code_list = response.data.result.list;
             return;
         },
-        async exchangeRate(){
+        async exchangeRate() {
             console.log("exchange rate")
             let response;
             const apiKey = '2f0586778bb1bfdd0181901743948218';
@@ -72,8 +72,8 @@ export default {
             const params = {
                 key: apiKey,
                 version: version,
-                from:this.init_code,
-                to:this.to_code,
+                from: this.init_code,
+                to: this.to_code,
             };
             try {
                 response = await axios.get('/onebox/exchange/currency', { params });
@@ -83,8 +83,8 @@ export default {
                 throw error;
             }
             console.log(response)
-            this.rate= response.data.result[0].exchange;
-            this.res_money = this.init_money*this.rate;
+            this.rate = response.data.result[0].exchange;
+            this.res_money = this.init_money * this.rate;
             return;
         }
     },
@@ -103,22 +103,25 @@ export default {
                 </el-aside>
                 <el-main>
                     <el-container style="display: flex;flex-direction: column;">
-                        <el-container class="left-box">
+                        <el-card class="left-box">
                             <el-container class="left-title">
                                 货币汇率查询
                             </el-container>
                             <el-container class="left-body">
                                 <el-container>
                                     <el-container>初始金额</el-container>
-                                    <el-input v-model="init_money" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;" clearable/>
+                                    <el-input v-model="init_money" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;"
+                                        clearable />
                                 </el-container>
                                 <el-container>
                                     <el-container>当前货币代码</el-container>
-                                    <el-input v-model="init_code" placeholder="请输入当前货币代码" style="height: 4vh;width: 20vw;" clearable/>
+                                    <el-input v-model="init_code" placeholder="请输入当前货币代码" style="height: 4vh;width: 20vw;"
+                                        clearable />
                                 </el-container>
                                 <el-container>
                                     <el-container>目标货币代码</el-container>
-                                    <el-input v-model="to_code" placeholder="请输入目标货币代码" style="height: 4vh;width: 20vw;" clearable/>
+                                    <el-input v-model="to_code" placeholder="请输入目标货币代码" style="height: 4vh;width: 20vw;"
+                                        clearable />
                                 </el-container>
                                 <el-container>
                                     <el-button @click="exchangeRate" class="exRate-btn">
@@ -127,19 +130,21 @@ export default {
                                 </el-container>
                                 <el-container>
                                     <el-container>目标金额</el-container>
-                                    <el-input v-model="res_money" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;" clearable disabled/>
+                                    <el-input v-model="res_money" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;"
+                                        clearable disabled />
                                 </el-container>
                                 <el-container>
                                     <el-container>汇率</el-container>
-                                    <el-input v-model="rate" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;" clearable disabled/>
+                                    <el-input v-model="rate" placeholder="请输入初始金额" style="height: 4vh;width: 20vw;"
+                                        clearable disabled />
                                 </el-container>
                             </el-container>
-                        </el-container>
+                        </el-card>
                         <el-container class="left-box" style=" top:25vh;">
                             <el-table :data="code_list" height="35vh" style="border-radius: 15px;margin-top: 2vh;">
                                 <el-table-column :label="`货币代码表`" align="center">
-                                <el-table-column prop="name" label="Name"/>
-                                <el-table-column prop="code" label="Code"/>
+                                    <el-table-column prop="name" label="Name" />
+                                    <el-table-column prop="code" label="Code" />
                                 </el-table-column>
                             </el-table>
                         </el-container>
@@ -147,8 +152,8 @@ export default {
                     <el-container class="right-box">
                         <el-table :data="conversion_rates" height="75vh" style="border-radius: 15px;">
                             <el-table-column :label="`今日美元汇率`" align="center">
-                            <el-table-column prop="name" label="Name"/>
-                            <el-table-column prop="rate" label="Rate"/>
+                                <el-table-column prop="name" label="Name" />
+                                <el-table-column prop="rate" label="Rate" />
                             </el-table-column>
                         </el-table>
                     </el-container>
@@ -168,54 +173,62 @@ export default {
     height: 100vh;
     position: fixed;
 }
-.el-main{
-  position: fixed;
-  background-color:#e3e3e3;
-  margin-top: 10vh;
-  width: 58vw;
-  height: 80vh;
-  left: 27vw;
-  border-radius: 15px;
-  position: fixed;
-  display: flex;
-  flex-direction: row;
+
+.el-main {
+    position: fixed;
+    background-color: #e3e3e3;
+    margin-top: 10vh;
+    width: 58vw;
+    height: 80vh;
+    left: 27vw;
+    border-radius: 15px;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
 }
-.right-box{
-  width: 15vw;
-  height: 73vh;
-  top: 0;
-  left: 35vw;
-  display: flex;
+
+.right-box {
+    width: 15vw;
+    height: 73vh;
+    top: 0;
+    left: 35vw;
+    display: flex;
 }
-.left-box{
-  width: 35vw;
-  height: 15vh;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+.left-box {
+    width: 35vw;
+    height: 55vh;
+    left: 0;
+    display: flex;
+    border-radius: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.left-title{
-  margin-top: 1vh;
-  font-family: 	NSimSun;
-  font-size: 1.4rem;
-  font-weight: bolder;
-  height: 10%;
+
+.left-title {
+    margin-top: 1vh;
+    margin-left: 1vw;
+    font-family: NSimSun;
+    font-size: 1.4rem;
+    font-weight: bolder;
+    height: 10%;
 }
-.left-body{
+
+.left-body {
     width: 35vw;
     height: 90%;
     border-radius: 15px;
-    border: 1px dashed;
     display: flex;
     flex-direction: column;
     padding: 1vw;
 }
-.exRate-btn{
+
+.exRate-btn {
     background-color: #4facfe;
     border-radius: 20px;
     width: 8vw;
     margin-left: 13vw;
-}
-</style>
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}</style>

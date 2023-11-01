@@ -111,7 +111,7 @@ export default {
                         <el-container class="left-box">
                             <el-container style="height: 10%;"/>
                             <el-container style="display: flex;flex-direction: column;height: 20%;">
-                                <el-container>请输入贷款金额，单位（万）</el-container>
+                                <el-container>请输入贷款本金，单位（万）</el-container>
                                 <el-input v-model="loan_money" placeholder="输入金额在0-500之间"></el-input>
                             </el-container>
                             <el-container style="height: 20%;"/>

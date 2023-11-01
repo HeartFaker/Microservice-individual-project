@@ -27,7 +27,7 @@ export default {
         }
     },
     created() {
-       //this.getNews();
+       this.getNews();
     },
     methods: {
         async getNews() {
@@ -79,7 +79,7 @@ export default {
                     <el-carousel  type="card" height="25vh">
                         <el-carousel-item v-for="(item, index) in News" :key="item">
                             <el-container v-if="index<10">
-                                <img src='https://www.mooyuu.com/uploadfile/2023/0123/20230123120541607.jpg' style="height:100%;width:100%;opacity: 0.4;z-index: 0;position: absolute;" alt="图片丢失了"/>
+                                <img src='../assets/icon/1.jpg' style="height:100%;width:100%;opacity: 0.4;z-index: 0;position: absolute;" alt="图片丢失了"/>
                                 <el-container style="height:100%;width:100%;z-index: 1;position: absolute;display: flex;flex-direction: column;justify-content: center;align-items: center;">
                                     <el-container class="news-title">
                                     {{ item.title }}
